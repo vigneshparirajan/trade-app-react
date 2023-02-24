@@ -35,7 +35,12 @@ export const Session = ({
 				<Title order={3}>{Math.round(session.tradeAmount)}</Title>
 			</div>
 			<div>
-				<Title order={3}>{session.tradeStatus}</Title>
+				<Title
+					order={3}
+					color={session.tradeStatus === 'LOSS' ? 'red' : 'green'}
+				>
+					{session.tradeStatus}
+				</Title>
 			</div>
 			<div>
 				<Title order={3}>{Math.round(session.totalAmount)}</Title>

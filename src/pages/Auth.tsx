@@ -31,7 +31,7 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 	};
 
 	return (
-		<Stack align="center" mt={200}>
+		<Stack align="center" mt={150}>
 			<Text size="xl" weight={500}>
 				Welcome to Trade App
 			</Text>

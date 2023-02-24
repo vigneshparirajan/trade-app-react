@@ -42,7 +42,12 @@ export const AppFooter = ({
 				tradeSession.tradeAmount =
 					(lastSession.totalAmount * config.tradePercent) / 100;
 			}
-			if (lastSession.totalAmount < config.investAmount * 0.2) {
+			if (
+				tradeSession.tradeAmount > 1250 ||
+				lastSession.totalAmount < config.investAmount * 0.2 ||
+				lastSession.totalAmount >
+					config.investAmount + config.investAmount * 0.5
+			) {
 				setStopLoss(true);
 				tradeSession.tradeAmount = 0;
 			} else {
