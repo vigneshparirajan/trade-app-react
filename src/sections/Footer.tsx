@@ -84,7 +84,10 @@ export const AppFooter = ({
 	return (
 		<Footer height={150} p="md">
 			<Text fw={800} align="center" color="yellow">
-				TOTAL : {Math.round(config.investAmount + session.investAmount)}
+				TOTAL :{' '}
+				{Math.round(
+					config.totalAmount - config.investAmount + session.investAmount
+				)}
 			</Text>
 			<Stack align="center" mt={5}>
 				<Group>
