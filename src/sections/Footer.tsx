@@ -44,6 +44,8 @@ export const AppFooter = ({
 			}
 			if (
 				tradeSession.tradeAmount > 1250 ||
+				Math.round(tradeSession.tradeAmount) >=
+					Math.round(tradeSession.investAmount) ||
 				lastSession.totalAmount < config.investAmount * 0.2 ||
 				lastSession.totalAmount >
 					config.investAmount + config.investAmount * 0.5
@@ -81,7 +83,9 @@ export const AppFooter = ({
 
 	return (
 		<Footer height={150} p="md">
-			<Text align="center">Trade Session</Text>
+			<Text fw={800} align="center" color="yellow">
+				TOTAL : {Math.round(config.investAmount + session.investAmount)}
+			</Text>
 			<Stack align="center" mt={5}>
 				<Group>
 					<IconCoinRupee />

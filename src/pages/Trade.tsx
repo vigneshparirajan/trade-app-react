@@ -1,4 +1,4 @@
-import { Stack, Input, Grid, Divider } from '@mantine/core';
+import { Input, Grid, Divider, Container } from '@mantine/core';
 import { IconCurrencyRupee, IconPercentage } from '@tabler/icons';
 import { Session } from '../sections/Session';
 import { ChangeEvent } from 'react';
@@ -27,7 +27,7 @@ export const Trade = ({
 	};
 
 	return (
-		<Stack align="center">
+		<Container size="xs" px="xs">
 			<Grid>
 				<Grid.Col span={6}>
 					<Input
@@ -70,7 +70,12 @@ export const Trade = ({
 					/>
 				</Grid.Col>
 			</Grid>
-			<Divider label="Sessions" labelPosition="center" />
+			<Divider
+				my="xs"
+				label="Sessions History"
+				variant="dashed"
+				labelPosition="center"
+			/>
 			{sessions.map((session) => {
 				return (
 					<Session
@@ -81,6 +86,6 @@ export const Trade = ({
 					/>
 				);
 			})}
-		</Stack>
+		</Container>
 	);
 };
