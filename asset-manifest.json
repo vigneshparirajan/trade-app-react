@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/trade-app-react/static/js/main.b7bfdc9e.js",
+    "main.js": "/trade-app-react/static/js/main.ae58bf3d.js",
     "index.html": "/trade-app-react/index.html",
-    "main.b7bfdc9e.js.map": "/trade-app-react/static/js/main.b7bfdc9e.js.map"
+    "main.ae58bf3d.js.map": "/trade-app-react/static/js/main.ae58bf3d.js.map"
   },
   "entrypoints": [
-    "static/js/main.b7bfdc9e.js"
+    "static/js/main.ae58bf3d.js"
   ]
 }
