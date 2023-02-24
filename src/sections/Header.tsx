@@ -29,7 +29,7 @@ export const AppHeader = ({
 				</div>
 				<div>
 					<Text fz="xl" align="center" mt={matches ? 0 : -5}>
-						Trader App
+						Trade App
 					</Text>
 				</div>
 				<div>

@@ -5,11 +5,12 @@ import {
 	Stack,
 	Divider,
 	Title,
-	Text,
+	Badge,
 } from '@mantine/core';
 import { useSetState, randomId } from '@mantine/hooks';
 import { IconCoinRupee, IconReceiptTax } from '@tabler/icons';
 import { useEffect, useState } from 'react';
+import Countdown from 'react-countdown';
 
 export const AppFooter = ({
 	config,
@@ -82,20 +83,34 @@ export const AppFooter = ({
 	};
 
 	return (
-		<Footer height={150} p="md">
-			<Text fw={800} align="center" color="yellow">
-				TOTAL :{' '}
-				{Math.round(
-					config.totalAmount - config.investAmount + session.investAmount
-				)}
-			</Text>
-			<Stack align="center" mt={5}>
+		<Footer height={150} p="xs">
+			<Stack align="center">
+				<Group align="right">
+					<Badge size="xl" radius="xl" color="yellow">
+						TOTAL :{' '}
+						{Math.round(
+							config.totalAmount - config.investAmount + session.investAmount
+						)}
+					</Badge>
+					<Badge size="xl" radius="xl" color="teal">
+						<Countdown
+							date={Date.now() + 300000}
+							renderer={({ minutes, seconds }) => {
+								return (
+									<span>
+										{minutes}:{seconds}
+									</span>
+								);
+							}}
+						/>
+					</Badge>
+				</Group>
 				<Group>
 					<IconCoinRupee />
-					<Title order={2}>{Math.round(session.investAmount)}</Title>
+					<Title order={3}>{Math.round(session.investAmount)}</Title>
 					<Divider orientation="vertical" />
 					<IconReceiptTax />
-					<Title order={2}>{Math.round(session.tradeAmount)}</Title>
+					<Title order={3}>{Math.round(session.tradeAmount)}</Title>
 				</Group>
 				{isStopLoss ? (
 					<div style={{ width: 300 }}>
