@@ -14,6 +14,16 @@ export const Trade = ({
 	setSessions: any;
 	sessions: ISession[];
 }) => {
+	const onTotalAmount = (event: ChangeEvent<HTMLInputElement>) => {
+		setConfig({ totalAmount: Number(event.target.value) });
+		setConfig({
+			tradeAmount: (config.investAmount * config.tradePercent) / 10,
+		});
+		setConfig({
+			investAmount: (config.totalAmount * config.investPercent) / 10,
+		});
+	};
+
 	const onInvestPercent = (event: ChangeEvent<HTMLInputElement>) => {
 		const percent = Number(event.target.value) / 100;
 		setConfig({ investPercent: Number(event.target.value) });
@@ -35,7 +45,7 @@ export const Trade = ({
 						icon={<IconCurrencyRupee />}
 						placeholder="TotalAmount"
 						value={config.totalAmount > 0 ? config.totalAmount : ''}
-						onChange={(e) => setConfig({ totalAmount: Number(e.target.value) })}
+						onChange={onTotalAmount}
 					/>
 				</Grid.Col>
 				<Grid.Col span={6}>
@@ -76,7 +86,7 @@ export const Trade = ({
 				variant="dashed"
 				labelPosition="center"
 			/>
-			{sessions.map((session) => {
+			{[...sessions].reverse().map((session) => {
 				return (
 					<Session
 						key={session.id}
