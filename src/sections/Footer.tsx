@@ -10,7 +10,7 @@ import {
 import { useSetState, randomId } from '@mantine/hooks';
 import { IconCoinRupee, IconReceiptTax } from '@tabler/icons';
 import { useEffect, useState } from 'react';
-import Countdown from 'react-countdown';
+import Countdown, { zeroPad } from 'react-countdown';
 
 export const AppFooter = ({
 	config,
@@ -98,7 +98,7 @@ export const AppFooter = ({
 							renderer={({ minutes, seconds }) => {
 								return (
 									<span>
-										{minutes}:{seconds}
+										{zeroPad(minutes)}:{zeroPad(seconds)}
 									</span>
 								);
 							}}
