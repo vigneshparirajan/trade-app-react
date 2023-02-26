@@ -2,11 +2,11 @@ import { Anchor, Header, SimpleGrid, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 export const AppHeader = ({
-	setAppSignIn,
+	setAuth,
 	setConfig,
 	setSessions,
 }: {
-	setAppSignIn: any;
+	setAuth: any;
 	setConfig: any;
 	setSessions: any;
 }) => {
@@ -25,7 +25,7 @@ export const AppHeader = ({
 		<Header height={{ base: 50, md: 70 }} p="md">
 			<SimpleGrid cols={3} mt={matches ? 5 : -5}>
 				<div>
-					<Anchor onClick={() => setAppSignIn(false)}>SignOut</Anchor>
+					<Anchor onClick={() => setAuth(false)}>SignOut</Anchor>
 				</div>
 				<div>
 					<Text fz="xl" align="center" mt={matches ? 0 : -5}>
