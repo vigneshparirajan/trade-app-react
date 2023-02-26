@@ -24,8 +24,8 @@ export const Auth = ({ setAppSignIn }: { setAppSignIn: any }) => {
 			showNotification({
 				color: 'red',
 				icon: <IconX />,
-				title: 'SignIn Failed',
-				message: 'Invalid Username and Password.',
+				title: 'Error',
+				message: 'Username and Password are invalid!',
 			});
 		}
 	};

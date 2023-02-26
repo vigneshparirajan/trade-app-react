@@ -8,7 +8,8 @@ import {
 	Badge,
 } from '@mantine/core';
 import { useSetState, randomId } from '@mantine/hooks';
-import { IconCoinRupee, IconReceiptTax } from '@tabler/icons';
+import { showNotification } from '@mantine/notifications';
+import { IconCoinRupee, IconReceiptTax, IconX } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import Countdown, { zeroPad } from 'react-countdown';
 
@@ -36,50 +37,67 @@ export const AppFooter = ({
 	useEffect(() => {
 		if (sessions.length > 0) {
 			const lastSession = sessions[sessions.length - 1];
-			tradeSession.investAmount = lastSession.totalAmount;
-			if (lastSession.tradeStatus === 'LOSS') {
-				tradeSession.tradeAmount = lastSession.tradeAmount * 0.75 * 3;
-			} else {
-				tradeSession.tradeAmount =
-					(lastSession.totalAmount * config.tradePercent) / 100;
-			}
-			if (
-				tradeSession.tradeAmount > 1250 ||
-				Math.round(tradeSession.tradeAmount) >=
-					Math.round(tradeSession.investAmount) ||
-				lastSession.totalAmount < config.investAmount * 0.2 ||
-				lastSession.totalAmount >
-					config.investAmount + config.investAmount * 0.5
-			) {
-				setStopLoss(true);
-				tradeSession.tradeAmount = 0;
-			} else {
-				setStopLoss(false);
-			}
-			setSession(tradeSession);
+			onTradeCalculation(lastSession);
+			onStopLossCalculation(lastSession);
 		} else if (config.investAmount > 0 && config.tradeAmount > 0) {
-			setSession({
-				investAmount: config.investAmount,
-				tradeAmount: config.tradeAmount,
-			});
+			onTradeInitialize(config.investAmount, config.tradeAmount);
 		} else {
-			setStopLoss(false);
-			setSession({
-				investAmount: 0,
-				tradeAmount: 0,
-			});
+			onTradeInitialize(0, 0);
 		}
 	}, [config, sessions]);
 
-	const onTradeSession = (status: Status) => {
-		session.id = randomId();
-		session.tradeStatus = status;
-		if (status === 'LOSS') {
-			session.totalAmount = session.investAmount - session.tradeAmount;
+	const onTradeInitialize = (investAmount: number, tradeAmount: number) => {
+		setSession({
+			investAmount,
+			tradeAmount,
+		});
+		setStopLoss(false);
+	};
+
+	const onTradeCalculation = (lastSession: ISession) => {
+		tradeSession.investAmount = lastSession.totalAmount;
+		if (lastSession.tradeStatus === 'LOSS') {
+			tradeSession.tradeAmount = lastSession.tradeAmount * 0.75 * 3;
 		} else {
-			session.totalAmount = session.investAmount + session.tradeAmount * 0.8;
+			tradeSession.tradeAmount =
+				(lastSession.totalAmount * config.tradePercent) / 100;
 		}
-		setSessions.append(session);
+		setSession(tradeSession);
+	};
+
+	const onStopLossCalculation = (lastSession: ISession) => {
+		if (
+			tradeSession.tradeAmount > 1250 ||
+			Math.round(tradeSession.tradeAmount) >=
+				Math.round(tradeSession.investAmount) ||
+			lastSession.totalAmount < config.investAmount * 0.2 ||
+			lastSession.totalAmount > config.investAmount + config.investAmount * 0.75
+		) {
+			setStopLoss(true);
+			tradeSession.tradeAmount = 0;
+		} else {
+			setStopLoss(false);
+		}
+	};
+
+	const onTradeSession = (status: Status) => {
+		if (session.investAmount > 0 && session.tradeAmount > 0) {
+			session.id = randomId();
+			session.tradeStatus = status;
+			if (status === 'LOSS') {
+				session.totalAmount = session.investAmount - session.tradeAmount;
+			} else {
+				session.totalAmount = session.investAmount + session.tradeAmount * 0.8;
+			}
+			setSessions.append(session);
+		} else {
+			showNotification({
+				color: 'red',
+				icon: <IconX />,
+				title: 'Error',
+				message: 'Investment and TradeAmount are not found!',
+			});
+		}
 	};
 
 	return (
