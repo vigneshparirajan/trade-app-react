@@ -6,8 +6,8 @@ export const NavBar = ({
 	openNavBar,
 }: {
 	hidden?: boolean;
-	setNavBar: any;
-	openNavBar: boolean;
+	setNavBar?: any;
+	openNavBar?: boolean;
 }) => {
 	return (
 		<>

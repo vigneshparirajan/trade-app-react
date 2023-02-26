@@ -2,11 +2,11 @@ import { Anchor, Header, SimpleGrid, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 export const AppHeader = ({
-	setAuth,
+	setAppSignIn,
 	setConfig,
 	setSessions,
 }: {
-	setAuth: any;
+	setAppSignIn: any;
 	setConfig: any;
 	setSessions: any;
 }) => {
@@ -20,12 +20,12 @@ export const AppHeader = ({
 		});
 		setSessions.setState([]);
 	};
-	const matches = useMediaQuery('(min-width: 727px)');
+	const matches = useMediaQuery('(min-width: 900px)');
 	return (
 		<Header height={{ base: 50, md: 70 }} p="md">
-			<SimpleGrid cols={3}>
+			<SimpleGrid cols={3} mt={matches ? 5 : -5}>
 				<div>
-					<Anchor onClick={() => setAuth(false)}>SignOut</Anchor>
+					<Anchor onClick={() => setAppSignIn(false)}>SignOut</Anchor>
 				</div>
 				<div>
 					<Text fz="xl" align="center" mt={matches ? 0 : -5}>

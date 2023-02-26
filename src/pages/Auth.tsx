@@ -4,7 +4,7 @@ import { useSetState } from '@mantine/hooks';
 import { ChangeEvent, KeyboardEvent } from 'react';
 import { showNotification } from '@mantine/notifications';
 
-export const Auth = ({ setAuth }: { setAuth: any }) => {
+export const Auth = ({ setAppSignIn }: { setAppSignIn: any }) => {
 	const [signIn, setSignIn] = useSetState({ username: '', password: '' });
 
 	const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +19,7 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 
 	const onSignIn = () => {
 		if (signIn.username === 'TraderAdmin' && signIn.password === 'Trader@123') {
-			setAuth(true);
+			setAppSignIn(true);
 		} else {
 			showNotification({
 				color: 'red',
