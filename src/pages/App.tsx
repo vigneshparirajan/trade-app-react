@@ -7,12 +7,16 @@ import { NavBar } from '../sections/NavBar';
 import { AppHeader } from '../sections/Header';
 import { AppFooter } from '../sections/Footer';
 import { Trade } from './Trade';
-import { useListState, useSetState } from '@mantine/hooks';
+import { useListState, useSetState, useSessionStorage } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 
 export default function App() {
 	const [isAuth, setAuth] = useState();
 	const [sessions, setSessions] = useListState<ISession>([]);
+	const [isSignedIn, setIsSignedIn] = useSessionStorage({
+		key: 'isSignedIn',
+		defaultValue: false,
+	});
 
 	const [config, setConfig] = useSetState({
 		tradeAmount: 0,
@@ -27,13 +31,14 @@ export default function App() {
 			<NotificationsProvider position="top-center">
 				<AppShell
 					layout="alt"
-					hidden={!isAuth}
+					hidden={!isAuth && !isSignedIn}
 					navbarOffsetBreakpoint="sm"
 					asideOffsetBreakpoint="sm"
 					aside={<AsideBar hidden />}
 					navbar={<NavBar hidden />}
 					header={
 						<AppHeader
+							setIsSignedIn={setIsSignedIn}
 							setSessions={setSessions}
 							setConfig={setConfig}
 							setAuth={setAuth}
@@ -47,7 +52,7 @@ export default function App() {
 						/>
 					}
 				>
-					{isAuth ? (
+					{isAuth || isSignedIn ? (
 						<Trade
 							config={config}
 							setConfig={setConfig}
@@ -55,7 +60,7 @@ export default function App() {
 							setSessions={setSessions}
 						/>
 					) : (
-						<Auth setAuth={setAuth} />
+						<Auth setAuth={setAuth} setIsSignedIn={setIsSignedIn} />
 					)}
 				</AppShell>
 			</NotificationsProvider>

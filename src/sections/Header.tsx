@@ -5,10 +5,12 @@ export const AppHeader = ({
 	setAuth,
 	setConfig,
 	setSessions,
+	setIsSignedIn,
 }: {
 	setAuth: any;
 	setConfig: any;
 	setSessions: any;
+	setIsSignedIn: any;
 }) => {
 	const onClearAll = () => {
 		setConfig({
@@ -21,11 +23,17 @@ export const AppHeader = ({
 		setSessions.setState([]);
 	};
 	const matches = useMediaQuery('(min-width: 900px)');
+
+	const onSignOut = () => {
+		setAuth(false);
+		setIsSignedIn(false);
+	};
+
 	return (
 		<Header height={{ base: 50, md: 70 }} p="md">
 			<SimpleGrid cols={3} mt={matches ? 5 : -5}>
 				<div>
-					<Anchor onClick={() => setAuth(false)}>SignOut</Anchor>
+					<Anchor onClick={onSignOut}>SignOut</Anchor>
 				</div>
 				<div>
 					<Text fz="xl" align="center" mt={matches ? 0 : -5}>
