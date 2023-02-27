@@ -74,7 +74,7 @@ export const AppFooter = ({
 			lastSession.totalAmount > config.investAmount + config.investAmount * 0.75
 		) {
 			setStopLoss(true);
-			tradeSession.tradeAmount = 0;
+			setSession({ tradeAmount: 0 });
 		} else {
 			setStopLoss(false);
 		}

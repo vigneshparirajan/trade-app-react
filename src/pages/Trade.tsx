@@ -82,7 +82,7 @@ export const Trade = ({
 			</Grid>
 			<Divider
 				my="xs"
-				label="Sessions History"
+				label={'Trades : ' + sessions.length}
 				variant="dashed"
 				labelPosition="center"
 			/>
