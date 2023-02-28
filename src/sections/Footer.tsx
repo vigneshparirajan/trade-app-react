@@ -6,6 +6,7 @@ import {
 	Divider,
 	Title,
 	Badge,
+	Space,
 } from '@mantine/core';
 import { useSetState, randomId } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
@@ -17,10 +18,12 @@ export const AppFooter = ({
 	config,
 	sessions,
 	setSessions,
+	setConfig,
 }: {
 	config: IConfig;
 	setSessions: any;
 	sessions: ISession[];
+	setConfig: any;
 }) => {
 	// Initializing
 	let tradeSession: ISession = {
@@ -100,16 +103,36 @@ export const AppFooter = ({
 		}
 	};
 
+	const onTotalAmount = () => {
+		return Math.round(
+			config.totalAmount - config.investAmount + session.investAmount
+		);
+	};
+
+	const setConfigTotalAmount = () => {
+		setSessions.setState([]);
+		setConfig({
+			totalAmount: onTotalAmount(),
+			investAmount: Math.round((onTotalAmount() * config.investPercent) / 100),
+			tradeAmount: Math.round(
+				(onTotalAmount() * config.investPercent * config.tradePercent) / 10000
+			),
+		});
+	};
+
 	return (
 		<Footer height={150} p="xs">
 			<Stack align="center">
 				<Group align="right">
-					<Badge size="xl" radius="xl" color="yellow">
-						TOTAL :{' '}
-						{Math.round(
-							config.totalAmount - config.investAmount + session.investAmount
-						)}
-					</Badge>
+					<Button
+						radius="xl"
+						variant="outline"
+						color="yellow"
+						onClick={setConfigTotalAmount}
+					>
+						TOTAL : <Space w="xs" />
+						<Title order={4}>{onTotalAmount()}</Title>
+					</Button>
 					<Badge size="xl" radius="xl" color="teal">
 						<Countdown
 							date={Date.now() + 300000}

@@ -49,6 +49,7 @@ export default function App() {
 							config={config}
 							sessions={sessions}
 							setSessions={setSessions}
+							setConfig={setConfig}
 						/>
 					}
 				>

@@ -15,25 +15,31 @@ export const Trade = ({
 	sessions: ISession[];
 }) => {
 	const onTotalAmount = (event: ChangeEvent<HTMLInputElement>) => {
-		setConfig({ totalAmount: Number(event.target.value) });
 		setConfig({
+			totalAmount: Number(event.target.value),
 			tradeAmount: (config.investAmount * config.tradePercent) / 10,
-		});
-		setConfig({
 			investAmount: (config.totalAmount * config.investPercent) / 10,
 		});
 	};
 
 	const onInvestPercent = (event: ChangeEvent<HTMLInputElement>) => {
 		const percent = Number(event.target.value) / 100;
-		setConfig({ investPercent: Number(event.target.value) });
-		setConfig({ investAmount: config.totalAmount * percent });
+		setConfig({
+			investPercent: Number(event.target.value),
+			investAmount: config.totalAmount * percent,
+		});
 	};
 
 	const onTradePercent = (event: ChangeEvent<HTMLInputElement>) => {
 		const percent = Number(event.target.value) / 100;
-		setConfig({ tradePercent: Number(event.target.value) });
-		setConfig({ tradeAmount: config.investAmount * percent });
+		setConfig({
+			tradePercent: Number(event.target.value),
+			tradeAmount: config.investAmount * percent,
+		});
+	};
+
+	const onInvestAmount = (event: ChangeEvent<HTMLInputElement>) => {
+		setConfig({ investAmount: Number(event.target.value) });
 	};
 
 	return (
@@ -65,9 +71,7 @@ export const Trade = ({
 						icon={<IconCurrencyRupee />}
 						placeholder="InvestAmount"
 						value={config.investAmount > 0 ? config.investAmount : ''}
-						onChange={(e) =>
-							setConfig({ investAmount: Number(e.target.value) })
-						}
+						onChange={onInvestAmount}
 					/>
 				</Grid.Col>
 				<Grid.Col span={6}>
