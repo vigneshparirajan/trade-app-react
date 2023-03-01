@@ -49,6 +49,7 @@ export const Auth = ({
 					placeholder="Username"
 					name="username"
 					onChange={onChange}
+					invalid={signIn.username === ''}
 				/>
 				<Space h="md" />
 				<Input
@@ -59,6 +60,7 @@ export const Auth = ({
 					type="password"
 					onChange={onChange}
 					onKeyPress={onEnter}
+					invalid={signIn.password === ''}
 				/>
 				<Space h="md" />
 				<Button type="submit" size="md" fullWidth onClick={onSignIn}>

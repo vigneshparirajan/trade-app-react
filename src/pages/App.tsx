@@ -15,7 +15,7 @@ export default function App() {
 	const [sessions, setSessions] = useListState<ISession>([]);
 	const [isSignedIn, setIsSignedIn] = useSessionStorage({
 		key: 'isSignedIn',
-		defaultValue: false,
+		defaultValue: undefined,
 	});
 
 	const [config, setConfig] = useSetState({
@@ -53,14 +53,15 @@ export default function App() {
 						/>
 					}
 				>
-					{isAuth || isSignedIn ? (
+					{(isAuth || isSignedIn) && (
 						<Trade
 							config={config}
 							setConfig={setConfig}
 							sessions={sessions}
 							setSessions={setSessions}
 						/>
-					) : (
+					)}
+					{!isAuth && isSignedIn !== undefined && !isSignedIn && (
 						<Auth setAuth={setAuth} setIsSignedIn={setIsSignedIn} />
 					)}
 				</AppShell>
