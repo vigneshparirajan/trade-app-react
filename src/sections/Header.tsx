@@ -5,12 +5,10 @@ export const AppHeader = ({
 	setAuth,
 	setConfig,
 	setSessions,
-	setIsSignedIn,
 }: {
 	setAuth: any;
 	setConfig: any;
 	setSessions: any;
-	setIsSignedIn: any;
 }) => {
 	const onClearAll = () => {
 		setConfig({
@@ -26,7 +24,6 @@ export const AppHeader = ({
 
 	const onSignOut = () => {
 		setAuth(false);
-		setIsSignedIn(false);
 	};
 
 	return (
