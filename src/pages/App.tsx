@@ -61,7 +61,7 @@ export default function App() {
 							setSessions={setSessions}
 						/>
 					)}
-					{!isAuth && isSignedIn !== undefined && !isSignedIn && (
+					{isSignedIn !== undefined && !isSignedIn && !isAuth && (
 						<Auth setAuth={setAuth} setIsSignedIn={setIsSignedIn} />
 					)}
 				</AppShell>
