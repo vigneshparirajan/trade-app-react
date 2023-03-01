@@ -48,6 +48,7 @@ export const Trade = ({
 				<Grid.Col span={6}>
 					<Input
 						size="md"
+						type="number"
 						icon={<IconCurrencyRupee />}
 						placeholder="TotalAmount"
 						value={config.totalAmount > 0 ? config.totalAmount : ''}
@@ -57,6 +58,7 @@ export const Trade = ({
 				<Grid.Col span={6}>
 					<Input
 						size="md"
+						type="number"
 						icon={<IconPercentage />}
 						placeholder="InvestPercent"
 						value={config.investPercent > 0 ? config.investPercent : ''}
@@ -68,6 +70,7 @@ export const Trade = ({
 				<Grid.Col span={6}>
 					<Input
 						size="md"
+						type="number"
 						icon={<IconCurrencyRupee />}
 						placeholder="InvestAmount"
 						value={config.investAmount > 0 ? config.investAmount : ''}
@@ -77,6 +80,7 @@ export const Trade = ({
 				<Grid.Col span={6}>
 					<Input
 						size="md"
+						type="number"
 						icon={<IconPercentage />}
 						placeholder="TradePercent"
 						value={config.tradePercent > 0 ? config.tradePercent : ''}
