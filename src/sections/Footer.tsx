@@ -60,7 +60,8 @@ export const AppFooter = ({
 	const onTradeCalculation = (lastSession: ISession) => {
 		tradeSession.investAmount = lastSession.totalAmount;
 		if (lastSession.tradeStatus === 'LOSS') {
-			tradeSession.tradeAmount = lastSession.tradeAmount * 0.75 * 3;
+			tradeSession.tradeAmount =
+				lastSession.tradeAmount + lastSession.tradeAmount * 0.25;
 		} else {
 			tradeSession.tradeAmount =
 				(lastSession.totalAmount * config.tradePercent) / 100;
@@ -68,12 +69,20 @@ export const AppFooter = ({
 		setSession(tradeSession);
 	};
 
+	const onTradeCount = (status: Status) => {
+		return sessions.filter((item: ISession) => item.tradeStatus === status)
+			.length;
+	};
+
 	const onStopLossCalculation = (lastSession: ISession) => {
 		if (
-			tradeSession.tradeAmount > 1250 ||
+			onTradeCount('WIN') === 4 ||
+			onTradeCount('LOSS') === 2 ||
+			tradeSession.tradeAmount > 1001 ||
 			Math.round(tradeSession.tradeAmount) >=
 				Math.round(tradeSession.investAmount) ||
-			lastSession.totalAmount < config.investAmount * 0.2 ||
+			lastSession.totalAmount < config.investAmount * 0.25 ||
+			// Current total is not more than 75% invested amount
 			lastSession.totalAmount > config.investAmount + config.investAmount * 0.75
 		) {
 			setStopLoss(true);
@@ -90,7 +99,7 @@ export const AppFooter = ({
 			if (status === 'LOSS') {
 				session.totalAmount = session.investAmount - session.tradeAmount;
 			} else {
-				session.totalAmount = session.investAmount + session.tradeAmount * 0.8;
+				session.totalAmount = session.investAmount + session.tradeAmount * 0.82;
 			}
 			setSessions.append(session);
 		} else {
@@ -98,7 +107,7 @@ export const AppFooter = ({
 				color: 'red',
 				icon: <IconX />,
 				title: 'Error',
-				message: 'Investment and TradeAmount are not found!',
+				message: 'Invest & Trade Amounts are not found!',
 			});
 		}
 	};

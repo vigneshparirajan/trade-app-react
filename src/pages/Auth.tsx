@@ -1,7 +1,7 @@
 import { Text, Button, Input, Stack, Space } from '@mantine/core';
 import { IconUser, IconLock, IconX } from '@tabler/icons';
 import { useSetState } from '@mantine/hooks';
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import { showNotification } from '@mantine/notifications';
 
 export const Auth = ({ setAuth }: { setAuth: any }) => {
@@ -18,9 +18,7 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 	};
 
 	const onSignIn = () => {
-		if (signIn.username === 'TraderAdmin' && signIn.password === 'Trader@123') {
-			setAuth(true);
-		} else {
+		if (isSignInVerified() === false) {
 			showNotification({
 				color: 'red',
 				icon: <IconX />,
@@ -29,6 +27,18 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 			});
 		}
 	};
+
+	const isSignInVerified = () => {
+		if (signIn.username === 'TraderAdmin' && signIn.password === 'Trader@123') {
+			setAuth(true);
+			return true;
+		}
+		return false;
+	};
+
+	useEffect(() => {
+		isSignInVerified();
+	}, [signIn]);
 
 	return (
 		<Stack align="center" mt={150}>

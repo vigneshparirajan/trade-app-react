@@ -1,5 +1,5 @@
 import { AppShell } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Auth } from './Auth';
 import { AsideBar } from '../sections/AsideBar';
 import { ThemeProvider } from '../providers/Theme';
@@ -9,9 +9,10 @@ import { AppFooter } from '../sections/Footer';
 import { Trade } from './Trade';
 import { useListState, useSetState } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
+import { useSessionStorage } from '../hooks/sessionStorage';
 
 export default function App() {
-	const [isAuth, setAuth] = useState(false);
+	const [isAuth, setAuth] = useSessionStorage('isAuth', false);
 	const [sessions, setSessions] = useListState<ISession>([]);
 
 	const [config, setConfig] = useSetState({
@@ -21,6 +22,18 @@ export default function App() {
 		tradePercent: 0,
 		investPercent: 0,
 	});
+
+	const [app, setApp] = useSetState({
+		isSignedIn: false,
+		isNotSignedIn: false,
+	});
+
+	useEffect(() => {
+		setApp({
+			isSignedIn: isAuth,
+			isNotSignedIn: !isAuth,
+		});
+	}, [isAuth]);
 
 	return (
 		<ThemeProvider>
@@ -48,16 +61,15 @@ export default function App() {
 						/>
 					}
 				>
-					{isAuth ? (
+					{app.isSignedIn && (
 						<Trade
 							config={config}
 							setConfig={setConfig}
 							sessions={sessions}
 							setSessions={setSessions}
 						/>
-					) : (
-						<Auth setAuth={setAuth} />
 					)}
+					{app.isNotSignedIn && <Auth setAuth={setAuth} />}
 				</AppShell>
 			</NotificationsProvider>
 		</ThemeProvider>
