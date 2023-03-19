@@ -1,21 +1,28 @@
-import { Text, Button, Input, Stack, Space } from '@mantine/core';
+import { Text, Button, Stack, Space, TextInput, Group } from '@mantine/core';
 import { IconUser, IconLock, IconX } from '@tabler/icons';
-import { useSetState } from '@mantine/hooks';
-import { ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
+import { useEffect } from 'react';
 import { showNotification } from '@mantine/notifications';
+import { useForm } from '@mantine/form';
 
 export const Auth = ({ setAuth }: { setAuth: any }) => {
-	const [signIn, setSignIn] = useSetState({ username: '', password: '' });
+	const form = useForm({
+		initialValues: {
+			username: '',
+			password: '',
+		},
+		validateInputOnBlur: ['password', 'username'],
+		validate: {
+			username: (value) => (value ? null : 'Invalid username'),
+			password: (value) => (value ? null : 'Invalid password'),
+		},
+	});
 
-	const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setSignIn({ [event.target.name]: event.target.value });
-	};
-
-	const onEnter = (event: KeyboardEvent) => {
+	useWindowEvent('keydown', (event) => {
 		if (event.key === 'Enter') {
-			onSignIn();
+			form.onSubmit(onSignIn);
 		}
-	};
+	});
 
 	const onSignIn = () => {
 		if (isSignInVerified() === false) {
@@ -29,7 +36,10 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 	};
 
 	const isSignInVerified = () => {
-		if (signIn.username === 'TraderAdmin' && signIn.password === 'Trader@123') {
+		if (
+			form.values.username === 'TraderAdmin' &&
+			form.values.password === 'Trader@1234'
+		) {
 			setAuth(true);
 			return true;
 		}
@@ -38,38 +48,31 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 
 	useEffect(() => {
 		isSignInVerified();
-	}, [signIn]);
+	}, [form.values]);
 
 	return (
 		<Stack align="center" mt={150}>
 			<Text size="xl" weight={500}>
 				Welcome to Trade App
 			</Text>
-			<div style={{ width: 300, marginTop: '10px' }}>
-				<Input
-					size="md"
+			<form onSubmit={form.onSubmit(onSignIn)}>
+				<TextInput
 					icon={<IconUser />}
 					placeholder="Username"
-					name="username"
-					onChange={onChange}
-					invalid={signIn.username === ''}
+					{...form.getInputProps('username')}
 				/>
 				<Space h="md" />
-				<Input
-					size="md"
+				<TextInput
+					type="password"
 					icon={<IconLock />}
 					placeholder="Password"
-					name="password"
-					type="password"
-					onChange={onChange}
-					onKeyPress={onEnter}
-					invalid={signIn.password === ''}
+					{...form.getInputProps('password')}
 				/>
 				<Space h="md" />
-				<Button type="submit" size="md" fullWidth onClick={onSignIn}>
+				<Button type="submit" size="md" fullWidth>
 					SignIn
 				</Button>
-			</div>
+			</form>
 		</Stack>
 	);
 };
