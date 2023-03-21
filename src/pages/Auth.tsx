@@ -11,21 +11,19 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 			username: '',
 			password: '',
 		},
-		validateInputOnBlur: ['password', 'username'],
+		validateInputOnBlur: ['username', 'password'],
 		validate: {
-			username: (value) => (value ? null : 'Invalid username'),
-			password: (value) => (value ? null : 'Invalid password'),
+			username: (value) => (value ? null : 'Please enter username!'),
+			password: (value) => (value ? null : 'Please enter password!'),
 		},
 	});
 
 	useWindowEvent('keydown', (event) => {
-		if (event.key === 'Enter') {
-			form.onSubmit(onSignIn);
-		}
+		return event.key === 'Enter' ? form.onSubmit(onSubmitSignIn) : null;
 	});
 
-	const onSignIn = () => {
-		if (isSignInVerified() === false) {
+	const onSubmitSignIn = () => {
+		if (onVerifySignIn() === false) {
 			showNotification({
 				color: 'red',
 				icon: <IconX />,
@@ -35,10 +33,10 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 		}
 	};
 
-	const isSignInVerified = () => {
+	const onVerifySignIn = () => {
 		if (
 			form.values.username === 'TraderAdmin' &&
-			form.values.password === 'Trader@1234'
+			form.values.password === 'Trader@123'
 		) {
 			setAuth(true);
 			return true;
@@ -47,7 +45,7 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 	};
 
 	useEffect(() => {
-		isSignInVerified();
+		onVerifySignIn();
 	}, [form.values]);
 
 	return (
@@ -55,7 +53,7 @@ export const Auth = ({ setAuth }: { setAuth: any }) => {
 			<Text size="xl" weight={500}>
 				Welcome to Trade App
 			</Text>
-			<form onSubmit={form.onSubmit(onSignIn)}>
+			<form onSubmit={form.onSubmit(onSubmitSignIn)}>
 				<TextInput
 					icon={<IconUser />}
 					placeholder="Username"
