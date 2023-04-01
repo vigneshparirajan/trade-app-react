@@ -1,8 +1,9 @@
-import { MantineProvider, MantineThemeOverride } from "@mantine/core";
+import '@fontsource/nunito';
+import { MantineProvider, MantineThemeOverride } from '@mantine/core';
 
 export const theme: MantineThemeOverride = {
-  colorScheme: "dark",
-  fontFamily: "Nunito, sans-serif",
+  colorScheme: 'dark',
+  fontFamily: 'Nunito, sans-serif',
 };
 
 interface ThemeProviderProps {
