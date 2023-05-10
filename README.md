@@ -17,6 +17,51 @@ You will also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
+
+## package.json
+
+<!-- "devDependencies": {
+  "@babel/core": "^7.20.12",
+  "@babel/plugin-transform-runtime": "^7.19.6",
+  "@babel/preset-env": "^7.20.2",
+  "@babel/preset-react": "^7.18.6",
+  "@babel/preset-typescript": "^7.18.6",
+  "@babel/runtime": "^7.20.7",
+  "@types/jest": "^29.2.5",
+  "jest": "^29.3.1",
+  "jest-environment-jsdom": "^29.3.1"
+} -->
+
+## jest.config.js
+
+<!-- module.export = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+}; -->
+
+## babel.config.js
+
+<!-- module.exports = {
+  presets: [
+    '@babel/preset-env',
+    [
+      '@babel/preset-react',
+      {
+        runtime: 'automatic',
+      },
+    ],
+    '@babel/preset-typescript',
+  ],
+  plugins: [
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        regenerator: true,
+      },
+    ],
+  ],
+}; -->
+
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
