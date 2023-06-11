@@ -32,13 +32,6 @@ Launches the test runner in the interactive watch mode.\
   "jest-environment-jsdom": "^29.3.1"
 } -->
 
-## jest.config.js
-
-<!-- module.export = {
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-}; -->
-
 ## babel.config.js
 
 <!-- module.exports = {
@@ -61,6 +54,18 @@ Launches the test runner in the interactive watch mode.\
     ],
   ],
 }; -->
+
+## package.json
+
+<!-- "scripts": {
+"test": "jest --watchAll",
+"prod": "react-scripts build && serve -s build"
+} -->
+
+## index.test.tsx
+
+<!-- /** @jest-environment jsdom */
+import '@testing-library/jest-dom/extend-expect'; -->
 
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
